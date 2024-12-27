@@ -16,21 +16,21 @@
     name: zig
     state: present
 
-# - name: Clone the Git repository
-#   git:
-#     repo: "https://github.com/user/repo.git"
-#     dest: "/tmp/repo"
-#     force: yes
-#
-# - name: Build the project with Zig
-#   command: sudo zig build -p /usr/local -Doptimize=ReleaseFast
-#   args:
-#     chdir: /tmp/repo
-#
-# - name: Remove the cloned repository
-#   file:
-#     path: "/tmp/repo"
-#     state: absent
+- name: Clone the Git repository
+  git:
+    repo: "https://github.com/user/repo.git"
+    dest: "/tmp/repo"
+    force: yes
+
+- name: Build the project with Zig
+  command: sudo zig build -p /usr/local -Doptimize=ReleaseFast
+  args:
+    chdir: /tmp/repo
+
+- name: Remove the cloned repository
+  file:
+    path: "/tmp/repo"
+    state: absent
 
 # Oh My Zsh
 - name: Ensure Zsh is installed
