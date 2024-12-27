@@ -1,0 +1,58 @@
+- name: Installing essential packages
+  pacman:
+    name:
+      - base-devel
+      - git
+      - neovim
+      - curl
+      - grep
+    state: present
+
+- name: Installing Terminal Utilities
+  pacman:
+    name:
+      - htop
+      - zsh
+      - fzf
+      - tmux
+      - exa
+      - ripgrep
+    state: present
+
+- name: Installing Dev stuff
+  pacman:
+    name:
+      - gcc
+      - zig
+      - npm
+      - docker
+      - docker-compose
+      - make
+      - python
+      - python-pip
+    state: present
+
+- name: Installing Hyprland related packages
+  pacman:
+    name:
+      - hyprland
+      - waybar
+      - wofi
+    state: present
+
+- name: Install Common programs
+  pacman:
+    name:
+      - firefox           # Web browser
+      - gimp              # Image editor
+      - telegram-desktop  # Messaging app
+    state: present
+
+- name: Install Spotify using yay
+  command: yay -S spotify --noconfirm
+  become: false
+  environment:
+    GPG_TTY: "{{ lookup('env', 'TTY') }}"
+  args:
+    creates: /usr/bin/spotify
+

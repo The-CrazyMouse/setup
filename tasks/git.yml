@@ -1,0 +1,5 @@
+- name: Set global Git user.name
+  command: git config user.name "The-CrazyMouse"
+
+- name: Set global Git user.email
+  command: git config user.email "andrerddantas@hotmail.com"

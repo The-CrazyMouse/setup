@@ -1,0 +1,44 @@
+- name: Set the system hostname to mousehouse if not already set
+  hostname:
+    name: mousehouse
+  when: ansible_hostname != 'mousehouse'
+
+- name: Ensure the user mouse exists and has sudo privileges
+  user:
+    name: mouse
+    groups: wheel
+    append: yes
+    state: present
+
+- name: Set the system locale to en_GB.UTF-8
+  locale_gen:
+    name: en_GB.UTF-8
+    state: present
+
+- name: Set system locale to en_GB.UTF-8 in locale.conf
+  lineinfile:
+    path: /etc/locale.conf
+    line: LANG=en_GB.UTF-8
+
+- name: Ensure kbd package is installed
+  pacman:
+    name: kbd
+    state: present
+  become: true
+
+- name: Set the keyboard layout to Portuguese (pt)
+  command: localectl set-keymap pt-latin9
+  become: true
+
+- name: Verify the keyboard layout is set to Portuguese
+  command: localectl status
+  register: keyboard_status
+  changed_when: false
+
+- name: Update pacman cache and packages
+  pacman:
+    update_cache: yes             # Update the package cache
+    upgrade: yes                  # Upgrade installed packages
+
+- name: Update yay and AUR packages
+  command: yay -Syu --noconfirm
