@@ -53,10 +53,10 @@
       - telegram-desktop  # Messaging app
     state: present
 
-- name: Install Spotify using yay
-  command: yay -S spotify --noconfirm
-  become: false
-  environment:
-    GPG_TTY: "{{ lookup('env', 'TTY') }}"
-  args:
-    creates: /usr/bin/spotify
+#- name: Install Spotify using yay
+#  command: yay -S spotify --noconfirm
+#  become: false
+#  environment:
+#    GPG_TTY: "{{ lookup('env', 'TTY') }}"
+#  args:
+#    creates: /usr/bin/spotify
