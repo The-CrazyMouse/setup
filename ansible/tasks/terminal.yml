@@ -1,0 +1,58 @@
+# Config Git
+- name: Set global Git user.name
+  command: git config user.name "The-CrazyMouse"
+
+- name: Set global Git user.email
+  command: git config user.email "andrerddantas@hotmail.com"
+
+#Ghostty
+- name: Ensure Git is installed
+  package:
+    name: git
+    state: present
+
+- name: Ensure Zig is installed
+  package:
+    name: zig
+    state: present
+
+# - name: Clone the Git repository
+#   git:
+#     repo: "https://github.com/user/repo.git"
+#     dest: "/tmp/repo"
+#     force: yes
+#
+# - name: Build the project with Zig
+#   command: sudo zig build -p /usr/local -Doptimize=ReleaseFast
+#   args:
+#     chdir: /tmp/repo
+#
+# - name: Remove the cloned repository
+#   file:
+#     path: "/tmp/repo"
+#     state: absent
+
+# Oh My Zsh
+- name: Ensure Zsh is installed
+  ansible.builtin.package:
+    name: zsh
+    state: present
+
+- name: Change the default shell
+  ansible.builtin.user:
+    name: mouse
+    shell: /bin/zsh
+
+- name: Check if Oh My Zsh is already installed
+  ansible.builtin.stat:
+    path: /home/mouse/.oh-my-zsh
+  register: oh_my_zsh_installed
+
+- name: Install Oh My Zsh
+  ansible.builtin.shell: |
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  args:
+    creates: /home/mouse/.oh-my-zsh
+  become: false
+  become_user: mouse
+  when: not oh_my_zsh_installed.stat.exists

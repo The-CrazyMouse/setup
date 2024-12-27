@@ -6,6 +6,7 @@
       - neovim
       - curl
       - grep
+      - stow
     state: present
 
 - name: Installing Terminal Utilities

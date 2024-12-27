@@ -1,0 +1,40 @@
+- name: Ensure dotfiles directory exists for mouse user
+  file:
+    path: "/home/mouse/dotfiles"
+    state: directory
+    mode: '0755'
+
+- name: Move the dotfiles folder to the correct location
+  command: mv ../dotfiles /home/mouse/dotfiles
+  args:
+    removes: /home/mouse/dotfiles
+
+- name: Install Stow
+  pacman:
+    name: stow
+    state: present
+
+- name: Stow ghostty configuration
+  command: stow ghostty
+  args:
+    chdir: "/home/mouse/dotfiles"
+
+- name: Stow hypr configuration
+  command: stow hypr
+  args:
+    chdir: "/home/mouse/dotfiles"
+
+# - name: Stow nvim configuration
+#   command: stow nvim
+#   args:
+#     chdir: "/home/mouse/dotfiles"
+#
+# - name: Stow tmux configuration
+#   command: stow tmux
+#   args:
+#     chdir: "/home/mouse/dotfiles"
+
+- name: Stow zsh configuration
+  command: stow zsh
+  args:
+    chdir: "/home/mouse/dotfiles"

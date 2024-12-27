@@ -1,0 +1,50 @@
+##############################################
+#####                                    #####
+#####          Ghostty Config            #####
+#####                                    #####
+#####                By:                 #####
+#####                                    #####
+#####          The-CrazyMouse            #####
+#####                                    #####
+#####             26/12/24               #####
+#####                                    #####
+##############################################
+
+# shell
+shell-integration = none
+
+#font
+font-family = Hack Nerd Font Prono
+font-size = 17
+
+# cursor
+shell-integration-features = no-cursor
+cursor-style = block
+cursor-style-blink = true
+
+#theme
+theme = Ayu Mirage
+background-opacity = 0.70
+background-blur-radius = 20
+
+# Set scrollback buffer to 100 MB (adjust as needed)
+scrollback-limit = 104857600
+
+
+# Padding
+window-padding-x = 10
+window-padding-y = 10
+
+# dark theme
+window-theme = dark
+
+# Saving state after closing
+window-save-state = never
+
+#notifications
+desktop-notifications = true
+
+window-decoration = false
+
+#GDK_DEBUG=gl-disable-gles ghostty
+

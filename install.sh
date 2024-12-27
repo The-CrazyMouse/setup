@@ -4,10 +4,12 @@ sudo pacman -S git ansible
 
 git clone https://github.com/The-CrazyMouse/setup.git ./setup
 
-cd setup
+cd setup/ansible
 
-chmod
-
-./install.sh
+ansible-playbook -i hosts local.yml
 
 sudo pacman -Rns ansible
+
+cd ../..
+
+rm -rf setup
