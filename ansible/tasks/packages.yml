@@ -7,6 +7,10 @@
       - curl
       - grep
       - stow
+      - ansible
+      - timeshift
+      - grub-btrfs
+      - inotify-tools
     state: present
 
 - name: Installing Terminal Utilities
