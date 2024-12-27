@@ -18,7 +18,7 @@
 
 - name: Clone the Git repository
   git:
-    repo: "https://github.com/user/repo.git"
+    repo: "https://github.com/ghostty-org/ghostty"
     dest: "/tmp/repo"
     force: yes
 
