@@ -1,37 +1,57 @@
 #!/bin/bash
 
-# install need packages for the instaall
-sudo pacman -S git ansible timeshift grub-btrfs inotify-tools
+set -e  # Exit immediately if a command fails
 
-# Creating a snapshot
+echo "Installing essential packages for the installation process..."
+sudo pacman -S --noconfirm --needed git timeshift grub-btrfs git-credential-manager
+
+# Creating a snapshot before configuration
+echo "Creating a pre-setup snapshot..."
 sudo timeshift --create --comments "Pre-Config"
 
-# Setting up the grub-btrfs
+# Setting up grub-btrfs
+echo "Setting up grub-btrfs..."
 sudo /etc/grub.d/41_snapshots-btrfs
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 sudo systemctl edit --full grub-btrfsd
 
-# Enabling to automatically add snapshots
-sudo systemctl start grub-btrfsd
-sudo systemctl enable grub-btrfsd
+# Enabling grub-btrfsd service to automatically add snapshots
+echo "Enabling automatic snapshot integration..."
+sudo systemctl enable --now grub-btrfsd
 
-# Coloning Repo
+echo "Configuring Git to use credential manager..."
+git config --global credential.helper manager-core
+
+# Cloning setup repository
+echo "Fetching setup scripts..."
 git clone https://github.com/The-CrazyMouse/setup.git ./setup
 
-# Moving inside
-cd setup/ansible
+# Entering the scripts folder
+cd setup/scripts
 
-# Running ansible
-ansible-playbook -i hosts local.yml
+# Making sure all scripts are executable
+echo "Making scripts executable..."
+chmod +x pre-setup.sh packages.sh terminal.sh dotfiles.sh
 
-# Uninstalling ansible
-sudo pacman -Rns ansible
+# Running setup scripts
+echo "Running pre-setup..."
+./pre-setup.sh
 
-# Moving out of the repo
+echo "Installing packages..."
+./packages.sh
+
+echo "Configuring terminal..."
+./terminal.sh
+
+echo "Applying dotfiles..."
+./dotfiles.sh
+
+# Moving out of the repo and cleaning up
 cd ../..
-
-# Removing the repo
+echo "Cleaning up setup repository..."
 rm -rf setup
 
-# snapshot final
-sudo timeshift --create --comments "Pre-Config"
+# Creating a final snapshot after setup
+echo "Creating post-setup snapshot..."
+sudo timeshift --create --comments "Post-Config"
+
