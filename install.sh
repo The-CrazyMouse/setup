@@ -3,7 +3,7 @@
 set -e  # Exit immediately if a command fails
 
 echo "Installing essential packages for the installation process..."
-sudo pacman -S --noconfirm --needed git timeshift grub-btrfs git-credential-manager
+sudo pacman -S --noconfirm --needed git timeshift grub-btrfs
 
 # Creating a snapshot before configuration
 echo "Creating a pre-setup snapshot..."
@@ -19,8 +19,8 @@ sudo systemctl edit --full grub-btrfsd
 echo "Enabling automatic snapshot integration..."
 sudo systemctl enable --now grub-btrfsd
 
-echo "Configuring Git to use credential manager..."
-git config --global credential.helper manager-core
+echo "Configuring Git to store token"
+git config --global credential.helper store
 
 # Cloning setup repository
 echo "Fetching setup scripts..."

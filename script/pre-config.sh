@@ -50,11 +50,19 @@ fi
 
 # Set the keyboard layout to Portuguese
 echo "Setting keyboard layout to pt-latin9..."
-sudo localectl set-keymap pt-latin9
+#sudo localectl set-keymap pt-latin9
 
 # Update pacman packages
 echo "Updating system packages..."
 sudo pacman -Syu --noconfirm
+
+#yay
+echo "Installing yay"
+sudo pacman -S --needed git base-devel
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd ..
 
 # Update AUR packages using yay (if available)
 if command -v yay &>/dev/null; then
